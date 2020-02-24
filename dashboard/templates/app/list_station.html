@@ -1,0 +1,12 @@
+{% extends "app/base_site.html" %}
+
+{% block content %}
+    <h1>Your Stations</h1>
+    <ul>
+        {% for estacion in estaciones_list %}
+        <li>
+            {{ estacion }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

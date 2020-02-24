@@ -1,0 +1,29 @@
+{% extends "app/base_site.html" %}
+
+{% load static %}
+{% load leaflet_tags %}
+
+{% block title %} Dashboard 1 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+<div id="map" class="map"></div>
+<script type="text/javascript">
+  var map = new ol.Map({
+    target: 'map',
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      })
+    ],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([-75, -15]),
+      zoom: 6
+    })
+  });
+</script>
+
+{% endblock content %}

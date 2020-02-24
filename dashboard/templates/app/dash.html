@@ -1,0 +1,114 @@
+{% extends "app/base_site.html" %}
+
+{% load static %}
+{% load leaflet_tags %}
+
+{% block title %} Dashboard 1 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <p>test here</p>
+    <div id="timeserie" style="width:1400px;height:600px;"></div>
+    <p>test here</p>
+    <div id="pisco" style="width:800px: height:600px;"></div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var endpoint = '/api/chart/data2'
+            var piscoData = piscoLabels = []
+
+            $.ajax({
+                method: "GET",
+                url: endpoint,
+                success: function(data){
+                    piscoLabels = data.pisco_labels
+                    piscoData = data.pisco_data
+                    estacionData = data.estacion_data
+                    piscoChart()
+                },
+                error: function(error_data){
+                    console.log("error")
+                }
+            })
+
+            function piscoChart(){
+                var trace_pisco = {
+                    type: "scatter",
+                    name: 'PISCO',
+                    x: piscoLabels,
+                    y: piscoData,
+                    line: { color: '#7F7F7F' }
+                };
+                var trace_estacion = {
+                    type: "scatter",
+                    name: 'ESTACION',
+                    x: piscoLabels,
+                    y: estacionData,
+                    line: { color: '#23b7e5' }
+                };
+                var data = [trace_estacion, trace_pisco];
+                var layout = {
+                    title: "Precipitación media mensual estación ****",
+                    xaxis: {title: { text: '' }},
+                    yaxis: {title: { text: 'Precipitación (mm)' }},
+                    margin: {l:260},
+                    showlegend: true,
+                    legend: { xanchor: 'center', x: 0.5, orientation: 'h' }
+                };
+            Plotly.newPlot('timeserie', data, layout);
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var endpoint = '/api/chart/data2'
+            var piscoData = piscoLabels = []
+
+            $.ajax({
+                method: "GET",
+                url: endpoint,
+                success: function(data){
+                    piscoLabels = data.pisco_labels
+                    piscoData = data.pisco_data
+                    estacionData = data.estacion_data
+                    piscoChart()
+                },
+                error: function(error_data){
+                    console.log("error")
+                }
+            })
+
+            function piscoChart(){
+                var trace_pisco = {
+                    type: "scatter",
+                    name: 'PISCO',
+                    x: piscoLabels,
+                    y: piscoData,
+                    line: { color: '#7F7F7F' }
+                };
+                var trace_estacion = {
+                    type: "scatter",
+                    name: 'ESTACION',
+                    x: piscoLabels,
+                    y: estacionData,
+                    line: { color: '#23b7e5' }
+                };
+                var data = [trace_estacion, trace_pisco];
+                var layout = {
+                    title: "Precipitación media mensual estación ****",
+                    xaxis: {title: { text: '' }},
+                    yaxis: {title: { text: 'Precipitación (mm)' }},
+                    margin: {l:260},
+                    showlegend: true,
+                    legend: { xanchor: 'center', x: 0.5, orientation: 'h' }
+                };
+            Plotly.newPlot('timeserie', data, layout);
+            }
+        })
+    </script>
+{% endblock content %}

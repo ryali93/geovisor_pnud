@@ -8,15 +8,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 def dashboard(request):
-    context = {}
-    template = loader.get_template('app/index.html')
-    return HttpResponse(template.render(context, request))
+    return render(request, "app/index.html", {})
+#
+# def dashboard(request):
+#     context = {}
+#     template = loader.get_template('app/index.html')
+#     return HttpResponse(template.render(context, request))
 
-def visor_html(request):
+def index(request):
     context = {}
-    load_template = request.path.split('/')[-1]
-    template = loader.get_template('app/' + load_template)
-    return HttpResponse(template.render(context, request))
+    return render(request, 'app/index.html', context)
+
+# def visor_html(request):
+#     context = {}
+#     load_template = request.path.split('/')[-1]
+#     template = loader.get_template('app/' + load_template)
+#     return HttpResponse(template.render(context, request))
 
 def list_stations(request):
     datos = []
@@ -28,7 +35,7 @@ def list_stations(request):
     context = {
         'estaciones_list': datos
     }
-    return render(request, "list_station", context)
+    return render(request, "app/list_station.html", context)
 
 def actualizar_grafico(request, codigo):
     unique_note = get_object_or_404(tb_data_monthly, id=codigo)

@@ -1,5 +1,12 @@
 {% extends "app/base_site.html" %}
 
+{% load static %}
+{% block title %} Dashboard 1 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
 {% block content %}
     <h1>Your Stations</h1>
     <ul>

@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
 
-    'leaflet',
     'rest_framework',
     'dashboard',
 ]
@@ -114,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 

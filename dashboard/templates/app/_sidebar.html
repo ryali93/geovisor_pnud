@@ -16,17 +16,17 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="app/index.html">
+        <a class="nav-link" href="{% url 'app:base' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Inicio</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="app/list_station.html">
+        <a class="nav-link" href="{% url 'app:listar_database' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Base de datos</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="app/map.html">
+        <a class="nav-link" href="{% url 'app:mapa' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Geovisor</span></a>
       </li>

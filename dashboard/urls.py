@@ -1,12 +1,17 @@
 from django.urls import path, re_path
-from .views import dashboard, actualizar_grafico, list_stations, index
+# from dashboard.views import visor_html, dashboard, actualizar_grafico, list_stations
 from django.conf.urls import url, include
+
+from dashboard.views import base, listar_database, mapa, grafico
+from dashboard.views import EstacionPISCO_Details
 
 app_name = 'app'
 
 urlpatterns = [
-    # re_path(r'^.*\.html', visor_html, name='visor'),
-    path('index/', index, name='index'),
-    path('list_station/', list_stations, name='list_station'),
-    path('update_graph/', actualizar_grafico, name='update_graph'),
+    path('', base, name='base'),
+    path('grafico/<str:codigo>/', grafico, name='grafico'),
+    path('list_database/', listar_database, name='listar_database'),
+    path('mapa/', mapa, name='mapa'),
+
+    url(r'^api/chart/data_estacion/(?P<pk>.+)/$', EstacionPISCO_Details.as_view()),
 ]

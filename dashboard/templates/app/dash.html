@@ -1,7 +1,6 @@
 {% extends "app/base_site.html" %}
 
 {% load static %}
-{% load leaflet_tags %}
 
 {% block title %} Dashboard 1 {% endblock title %}
 
@@ -13,14 +12,16 @@
     <p>test here</p>
     <div id="timeserie" style="width:1400px;height:600px;"></div>
     <p>test here</p>
+    <p>{{ codigo }}</p>
+
     <div id="pisco" style="width:800px: height:600px;"></div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            var endpoint = '/api/chart/data2'
-            var piscoData = piscoLabels = []
+            var endpoint = '/api/chart/data_estacion/{{ codigo }}';
+            var piscoData = piscoLabels = [];
 
             $.ajax({
                 method: "GET",
@@ -53,7 +54,7 @@
                 };
                 var data = [trace_estacion, trace_pisco];
                 var layout = {
-                    title: "Precipitación media mensual estación ****",
+                    title: "Precipitación media mensual estación {{ codigo }}",
                     xaxis: {title: { text: '' }},
                     yaxis: {title: { text: 'Precipitación (mm)' }},
                     margin: {l:260},
@@ -66,7 +67,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            var endpoint = '/api/chart/data2'
+            var endpoint = '/api/chart/data_estacion/{{ codigo }}/'
             var piscoData = piscoLabels = []
 
             $.ajax({
@@ -100,7 +101,7 @@
                 };
                 var data = [trace_estacion, trace_pisco];
                 var layout = {
-                    title: "Precipitación media mensual estación ****",
+                    title: "Precipitación media mensual estación {{ codigo }}",
                     xaxis: {title: { text: '' }},
                     yaxis: {title: { text: 'Precipitación (mm)' }},
                     margin: {l:260},

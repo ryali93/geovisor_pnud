@@ -156,3 +156,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #     os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
 #     GDAL_LIBRARY_PATH = r'C:\Python36\Lib\site-packages\osgeo\gdal300.dll'
 #     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')

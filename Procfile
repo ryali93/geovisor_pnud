@@ -1,0 +1,1 @@
+web: gnuicorn tutorial.wsgi --log-file -

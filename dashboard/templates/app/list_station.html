@@ -1,12 +1,24 @@
 {% extends "app/base_site.html" %}
 
 {% block content %}
-    <h1>Your Stations</h1>
-    <ul>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Código</th>
+        <th>Código</th>
+    </tr>
+    </thead>
+
+    <tbody>
         {% for estacion in estaciones_list %}
-        <li id="{{ estacion }}">
-            {{ estacion }} <a href="../grafico/{{ estacion }}"> Ver </a>
-        </li>
+        <tr class="table-active">
+            <td>{{ estacion }}</td>
+            <td>{{ estacion }}</td>
+            <td><a href="../grafico/{{ estacion }}"> {{ estacion }} </a></td>
+        </tr>
         {% endfor %}
-    </ul>
+    </tbody>
+
+</table>
 {% endblock %}

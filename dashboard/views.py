@@ -11,14 +11,14 @@ def base(request):
     return render(request, 'app/index.html', context)
 
 def listar_database(request):
-    datos = []
-    print(datos)
+    cod_est = []
+    nom_est = []
     for dato in tb_data_monthly.objects.all():
-        datos.append(dato.cod_est)
-    datos = list(set(datos))
-    print(datos)
+        cod_est.append(dato.cod_est)
+        nom_est.append(dato.cod_est)
+    cod_est = list(set(cod_est))
     context = {
-        'estaciones_list': datos
+        'estaciones_list': cod_est
     }
     return render(request, 'app/list_station.html', context)
 

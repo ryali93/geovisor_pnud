@@ -157,5 +157,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #     GDAL_LIBRARY_PATH = r'C:\Python36\Lib\site-packages\osgeo\gdal300.dll'
 #     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
-# GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-# GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')

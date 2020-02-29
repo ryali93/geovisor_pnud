@@ -1,1 +1,1 @@
-web: gnuicorn tutorial.wsgi --log-file -
+web: gnuicorn geovisor.wsgi --log-file -

@@ -11,6 +11,10 @@ def base(request):
     return render(request, 'app/index.html', context)
 
 def listar_database(request):
+    context = {}
+    return render(request, 'app/list_database.html', context)
+
+def listar_estaciones(request):
     cod_est = []
     nom_est = []
     for dato in tb_data_monthly.objects.all():

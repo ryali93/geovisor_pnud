@@ -1,24 +1,42 @@
 {% extends "app/base_site.html" %}
 
 {% block content %}
-<table class="table">
-    <thead>
-    <tr>
-        <th>Código</th>
-        <th>Código</th>
-        <th>Código</th>
-    </tr>
-    </thead>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title">Bases de Datos</h4>
+            <p class="category">Comparación de los datos de estaciones</p>
+        </div>
+        <div class="card-content table-responsive">
+            <table class="table table-hover">
+                <thead class="text-info text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Fechas de datos</th>
+                        <th class="td-actions text-right">Gráfico</th>
+                    </tr>
+                </thead>
 
-    <tbody>
-        {% for estacion in estaciones_list %}
-        <tr class="table-active">
-            <td>{{ estacion }}</td>
-            <td>{{ estacion }}</td>
-            <td><a href="../grafico/{{ estacion }}"> {{ estacion }} </a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
+                <tbody>
+                    {% for estacion in estaciones_list %}
+                    <tr>
+                        <td>1</td>
+                        <td>{{ estacion }}</td>
+                        <td>{{ estacion }}</td>
+                        <td>07/02/2019</td>
+                        <td class="td-actions text-right">
+                            <a href="../grafico/{{ estacion }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles">
+                                <i class="material-icons">Ver detalles</i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
 
-</table>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

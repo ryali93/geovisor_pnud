@@ -10,19 +10,67 @@
 
 {% block content %}
 <div id="map" class="map"></div>
+
 <script type="text/javascript">
+  var vista = new ol.View({
+    center: [-75, -9],
+    zoom: 6,
+    projection: 'EPSG:4326'
+  });
+
+  var fuenteBase = new ol.source.OSM();
+  var capaBase = new ol.layer.Tile({source:fuenteBase});
+
+  var fuenteWMS = new ol.source.TileWMS({
+    url: "http://servicios.idee.es/wms-inspire/mdt",
+    params: {"LAYERS": "Pendientes"}
+  });
+
+  var capaWMS = new ol.layer.Tile({
+    opacity: 0.5,
+    source:fuenteWMS
+  });
+
+  var capaEsri = new ol.layer.Image({
+      name: 'cartografia',
+      style: 'cartografia',
+      visible: true,
+      source: new ol.source.ImageWMS({
+          url: 'https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer/0',
+          params: {
+              'LAYERS': '1',
+              'STYLES': 'default'}
+      })
+  });
+
+  var controlNuevo = ol.control.defaults({
+      attributionOptions:  {
+        collapsed: false
+      }
+    }).extend([
+      new ol.control.ScaleLine()
+    ]);
+
   var map = new ol.Map({
     target: 'map',
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
-    view: new ol.View({
-      center: ol.proj.fromLonLat([-75, -15]),
-      zoom: 6
-    })
+    layers: [ capaBase, capaWMS ],
+    view: vista,
+    controls: controlNuevo
   });
+
+  var grupo = new ol.layer.Group({
+      title: 'Overlays',
+      layers: [ capaBase ]
+  });
+
+  var layerSwitcher = new ol.control.LayerSwitcher({
+      tipLabel: 'Leyenda'
+    });
+
+  map.addControl(layerSwitcher);
+
+  layerSwitcher.showPanel();
+
 </script>
 
 {% endblock content %}

@@ -6,6 +6,15 @@ from .models import tb_data_monthly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+
+from django.views.defaults import page_not_found
+
+
+def view_404(request, exception):
+    return render(request, 'app/404.html')
+
 def base(request):
     context = {}
     return render(request, 'app/index.html', context)
@@ -13,6 +22,10 @@ def base(request):
 def listar_database(request):
     context = {}
     return render(request, 'app/list_database.html', context)
+
+def listar_mapas(request):
+    context = {}
+    return render(request, 'app/list_mapas.html', context)
 
 def listar_estaciones(request):
     cod_est = []

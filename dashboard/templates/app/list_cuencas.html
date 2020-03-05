@@ -1,0 +1,38 @@
+{% extends "app/base_site.html" %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title">Bases de Datos</h4>
+            <p class="category">Datos de las cuencas del sistema TDPS</p>
+        </div>
+        <div class="card-content table-responsive">
+            <table class="table table-hover">
+                <thead class="text-info text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th class="td-actions text-right">Ver detalles</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for cuenca in cuencas_list %}
+                    <tr>
+                        <td style="text-align:center;">{{ cuenca.orden }}</td>
+                        <td style="text-align:center;">{{ cuenca.codigo }}</td>
+                        <td style="text-align:center;">{{ cuenca.nombre }}</td>
+                        <td style="text-align:center;">{{ cuenca.area }}</td>
+                        <td class="td-actions text-right"><a href="../cuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

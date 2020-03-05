@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import Http404
 
-from .models import tb_data_monthly
+from .models import tb_data_monthly, gpo_cuencas
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,6 +26,24 @@ def listar_database(request):
 def listar_mapas(request):
     context = {}
     return render(request, 'app/list_mapas.html', context)
+
+def listar_cuencas(request):
+    list_cuenca = []
+    a = 0
+    for cuenca in gpo_cuencas.objects.all():
+        if 'Intercuenca' not in cuenca.nombre:
+            a += 1
+            list_cuenca.append({
+                'orden': a,
+                'codigo': cuenca.codigo,
+                'nombre': cuenca.nombre,
+                'area': round(cuenca.area, 2),
+                'geom': cuenca.geom
+            })
+    context = {
+        'cuencas_list': list_cuenca
+    }
+    return render(request, 'app/list_cuencas.html', context)
 
 def listar_estaciones(request):
     cod_est = []
@@ -70,3 +88,34 @@ class EstacionPISCO_Details(APIView):
 def grafico(request, codigo):
     context = {'codigo': codigo}
     return render(request, 'app/dash.html', context)
+
+# def cuenca(request, codigo):
+#     geometria = ''
+#     for cuenca in gpo_cuencas.objects.all():
+#         if cuenca.codigo == codigo:
+#             geometria = cuenca.geom
+#     context = {'codigo': codigo, 'geometria': geometria}
+#     return render(request, 'app/cuenca.html', context)
+
+
+def cuenca(request, codigo):
+    from django.core.serializers import serialize
+    geometria = serialize('geojson', gpo_cuencas.objects.filter(codigo=codigo),
+              geometry_field='geom',
+              fields=('codigo', 'nombre'))
+    import json
+    geom_json = json.loads(geometria)
+    coords = []
+    for g in geom_json['features'][0]["geometry"]["coordinates"][0][0]:
+        y = g[0]
+        x = g[1]
+        coords.append([x, y])
+    geom_json['features'][0]["geometry"]["coordinates"][0][0] = coords
+    geo_json = {
+        "type": "Feature",
+        "name": "nombre",
+        "properties": {},
+        "geometry": geom_json['features'][0]["geometry"]
+    }
+    return render(request, "app/cuenca.html", {'geometria': geo_json})
+

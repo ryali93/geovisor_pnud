@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import Http404
 
-from .models import tb_data_monthly, gpo_cuencas
+from .models import tb_data_monthly, gpo_cuencas, data_bh_month, data_bh_historic, data_hydrogram_month, data_hydrogram_year
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -89,20 +89,32 @@ def grafico(request, codigo):
     context = {'codigo': codigo}
     return render(request, 'app/dash.html', context)
 
-# def cuenca(request, codigo):
-#     geometria = ''
-#     for cuenca in gpo_cuencas.objects.all():
-#         if cuenca.codigo == codigo:
-#             geometria = cuenca.geom
-#     context = {'codigo': codigo, 'geometria': geometria}
-#     return render(request, 'app/cuenca.html', context)
-
-
 def cuenca(request, codigo):
+    # Datos del balance hidrico
+    geo_json = extract_geom_cuenca(codigo)
+    bh_monthly = extract_data_bh_monthly(codigo)
+    bh_historico = extract_data_bh_historic(codigo)
+    tb_monthly = {}
+    tb_historico = {}
+    hydrograph_month = extract_hydrograph_month(codigo)
+    hydrograph_year = extract_hydrograph_year(codigo)
+
+    context = {
+        'geometria': geo_json,
+        'bh_monthly': bh_monthly,
+        'bh_historico': bh_historico,
+        'tb_monthly': tb_monthly,
+        'tb_historico': tb_historico,
+        'hydrograph_month': hydrograph_month,
+        'hydrograph_year': hydrograph_year
+    }
+    return render(request, "app/cuenca.html", context)
+
+def extract_geom_cuenca(codigo):
     from django.core.serializers import serialize
     geometria = serialize('geojson', gpo_cuencas.objects.filter(codigo=codigo),
-              geometry_field='geom',
-              fields=('codigo', 'nombre'))
+                          geometry_field='geom',
+                          fields=('codigo', 'nombre'))
     import json
     geom_json = json.loads(geometria)
     coords = []
@@ -117,5 +129,33 @@ def cuenca(request, codigo):
         "properties": {},
         "geometry": geom_json['features'][0]["geometry"]
     }
-    return render(request, "app/cuenca.html", {'geometria': geo_json})
+    return geo_json
 
+def extract_data_bh_monthly(codigo):
+    datos = data_bh_month.objects.filter(cod_cuenca=codigo)
+    data = {
+        'pp': [d.pp for d in datos],
+        'etr': [d.etr for d in datos],
+        'runoff': [d.escurr for d in datos]
+    }
+    return data
+
+def extract_data_bh_historic(codigo):
+    datos = data_bh_historic.objects.filter(cod_cuenca=codigo)
+    data = {
+        'pp': [d.pp for d in datos],
+        'etr': [d.etr for d in datos],
+        'runoff': [d.escurr for d in datos]
+    }
+    return data
+
+def extract_hydrograph_month(codigo):
+    datos = data_hydrogram_month.objects.filter(cod_cuenca=codigo)
+    data = [d.caudal for d in datos]
+    return data
+
+def extract_hydrograph_year(codigo):
+    import datetime, time
+    datos = data_hydrogram_year.objects.filter(cod_cuenca=codigo)
+    data = [[int(round(d.mes.timestamp() * 1000)), d.caudal] for d in datos]
+    return data

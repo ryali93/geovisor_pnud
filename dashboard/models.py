@@ -22,7 +22,7 @@ class gpo_cuencas_tdps(geomodels.Model):
     codigo = geomodels.TextField(db_column='codigo', blank=True, null=True)
     nombre = geomodels.TextField(db_column='nombre', blank=True, null=True)
     area = geomodels.FloatField(db_column='area_km2', blank=True, null=True)
-    geom = geomodels.MultiPolygonField()
+    geom = geomodels.MultiPolygonField(blank=True, null=True)
 
     def __str__(self):
         return self.codigo

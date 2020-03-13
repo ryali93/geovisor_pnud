@@ -17,12 +17,12 @@ from django.contrib.gis.db import models as geomodels
 #         managed = False
 #         db_table = 'tb_data_monthly'
 
-class gpo_cuencas_tdps(geomodels.Model):
-    id = geomodels.BigIntegerField(blank=False, null=False, primary_key=True)
-    codigo = geomodels.TextField(db_column='codigo', blank=True, null=True)
-    nombre = geomodels.TextField(db_column='nombre', blank=True, null=True)
-    area = geomodels.FloatField(db_column='area_km2', blank=True, null=True)
-    geom = geomodels.MultiPolygonField(blank=True, null=True)
+class gpo_cuencas_tdps(models.Model):
+    id = models.BigIntegerField(blank=False, null=False, primary_key=True)
+    codigo = models.TextField(db_column='codigo', blank=True, null=True)
+    nombre = models.TextField(db_column='nombre', blank=True, null=True)
+    area = models.FloatField(db_column='area_km2', blank=True, null=True)
+    geom = models.TextField(db_column='geom_json', blank=True, null=True)
 
     def __str__(self):
         return self.codigo

@@ -112,13 +112,12 @@ def cuenca(request, codigo):
     return render(request, "app/cuenca.html", context)
 
 def extract_geom_cuenca(codigo):
-    from django.core.serializers import serialize
-    print(gpo_cuencas_tdps.objects.filter(codigo=codigo))
-    geometria = serialize('geojson', gpo_cuencas_tdps.objects.filter(codigo=codigo),
-                          geometry_field='geom',
-                          fields=('codigo', 'nombre'))
+    # geometria = serialize('geojson', gpo_cuencas_tdps.objects.filter(codigo=codigo),
+    #                       geometry_field='geom',
+    #                       fields=('codigo', 'nombre'))
+    geometria = gpo_cuencas_tdps.objects.filter(codigo=codigo)
     import json
-    geom_json = json.loads(geometria)
+    geom_json = json.loads(geometria[0].geom)
     # coords = []
     # for g in geom_json['features'][0]["geometry"]["coordinates"][0][0]:
     #     y = g[0]
@@ -129,7 +128,7 @@ def extract_geom_cuenca(codigo):
         "type": "Feature",
         "name": "nombre",
         "properties": {},
-        "geometry": geom_json['features'][0]["geometry"]
+        "geometry": geom_json
     }
     return geo_json
 

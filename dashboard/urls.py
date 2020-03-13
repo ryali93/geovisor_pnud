@@ -16,10 +16,8 @@ urlpatterns = [
     path('cuenca/<str:codigo>/', cuenca, name='cuenca'),
 
     path('list_database/', listar_database, name='listar_database'),
-    # path('list_estaciones/', listar_estaciones, name='listar_estaciones'),
     path('list_mapas/', listar_mapas, name='listar_mapas'),
     path('list_cuencas/', listar_cuencas, name='listar_cuencas'),
     path('mapa/', mapa, name='mapa'),
 
-    # url(r'^api/chart/data_estacion/(?P<pk>.+)/$', EstacionPISCO_Details.as_view()),
 ]

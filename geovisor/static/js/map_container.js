@@ -2,96 +2,113 @@ window.addEventListener("map:init", function (event) {
 var map = event.detail.map.setView( [-15, -75], 4);
 
 //Download GeoJSON data with Ajax
-// Geometria de estaciones
-// fetch(dataurl)
-//   .then(function(resp) {
-//     return resp.json();
-//   })
-//   .then(function(data) {
-//    var estaciones = L.geoJson(data, {
-//      onEachFeature: function onEachFeature(feature, layer) {
-//        var props = feature.properties;
-//        var content = `<h3>${props.estado}</h3><p>${props.nom}</p>`;
-//        layer.bindPopup(content);
-//    }});
-//   });
+var estaciones = L.tileLayer.wms("http://localhost:8080/geoserver/climatic-data/wms", {
+  layers: "climatic-data:opendata_historic",
+  iconUrl: 'img/red.png',
+  format: 'image/png',
+  transparent: true
+});
 
-//var estaciones = L.tileLayer.wms("http://localhost:8080/geoserver/climatic-data/wms", {
-//   layers: "climatic-data:opendata_historic",
-//   iconUrl: 'img/red.png',
-//   format: 'image/png',
-//   transparent: true
+estaciones.bindPopup(function (error, featureCollection) {
+   if (error || featureCollection.features.length === 0) {
+     return false;
+   } else {
+     return 'ESTACION: ' + featureCollection.features[0].properties.NOM;
+   }
+});
+
+var departamentos = L.esri.dynamicMapLayer({
+   url: "https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_DEMARCACION_WGS84/MapServer",
+   layers: ["0"]
+});
+
+var provincias = L.esri.dynamicMapLayer({
+   url: "https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_DEMARCACION_WGS84/MapServer",
+   layers: ["1"]
+});
+
+var distritos = L.esri.dynamicMapLayer({
+   url: "https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_DEMARCACION_WGS84/MapServer",
+   layers: ["2"]
+});
+
+//var raster_tdps = L.esri.dynamicMapLayer({
+//   url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/services_raster_tdps/MapServer",
+//   layers: ["2"]
 //});
-//
-//estaciones.bindPopup(function (error, featureCollection) {
-//    if (error || featureCollection.features.length === 0) {
-//      return false;
-//    } else {
-//      return 'ESTACION: ' + featureCollection.features[0].properties.NOM;
-//    }
-//});
 
-var departamentos = L.tileLayer.wms("http://localhost:8080/geoserver/bd/wms", {
-   layers: "bd:gpo_departamentos",
-   format: 'image/png',
-   transparent: true
+var tdps_tmax = L.esri.tiledMapLayer({
+    url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/tdps_tmax/MapServer",
+    opacity: 0.6,
+    minZoom: 6,
+    maxZoom: 13,
+    detectRetina: false
 });
 
-var provincias = L.tileLayer.wms("http://localhost:8080/geoserver/bd/wms", {
-   layers: "bd:gpo_provincias",
-   format: 'image/png',
-   transparent: true
+tdps_tmax.bindPopup(function (error, rasterTiled) {
+    console.log(rasterTiled);
+    console.log(error)
 });
 
-var gpo_puno = L.tileLayer.wms("http://localhost:8080/geoserver/bd/wms", {
-   layers: "bd:gpo_dep_puno",
-   format: 'image/png',
-   transparent: true
+var tdps_tmin = L.esri.tiledMapLayer({
+    url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/tdps_tmin/MapServer",
+    opacity: 0.6,
+    minZoom: 6,
+    maxZoom: 13,
+    detectRetina: false
 });
 
-var estaciones_colombia = L.esri.dynamicMapLayer({
-   url: "http://dhime.ideam.gov.co/arcgis/rest/services/CNE/EstacionesQ_edit/MapServer",
-   useCors: false
+tdps_tmin.bindPopup(function (error, featureCollection) {
+    return 'ESTACION: '
 });
 
-
-var imerg_7day = L.esri.dynamicMapLayer({
-   url: "https://gis1.servirglobal.net/arcgis/rest/services/Global/IMERG_Accumulations/MapServer",
-   layers: [3]
+var tdps_dem = L.esri.tiledMapLayer({
+    url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/tdps_dem/MapServer",
+    opacity: 0.6,
+    minZoom: 6,
+    maxZoom: 13,
+    detectRetina: false
 });
 
-var zonavida = L.tileLayer.wms("http://idesep.senamhi.gob.pe/geoserver/g_05_06/wms", {
-   layers: "05_06_001_03_001_521_0000_00_00",
-   format: 'image/png',
-   transparent: true
+var tdps_etp = L.esri.tiledMapLayer({
+    url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/tdps_etp/MapServer",
+    opacity: 0.6,
+    minZoom: 6,
+    maxZoom: 13,
+    detectRetina: false
 });
 
-var zonavida_2 = L.esri.dynamicMapLayer({
-   url: "http://idesep.senamhi.gob.pe/geoserver/g_05_06/wms",
-   layers: ["05_06_001_03_001_521_0000_00_00"]
+var tdps_pp = L.esri.tiledMapLayer({
+    url: "https://tiles.arcgis.com/tiles/xyhOybaVXpstyizb/arcgis/rest/services/tdps_pp/MapServer",
+    opacity: 0.6,
+    minZoom: 6,
+    maxZoom: 13,
+    detectRetina: false
 });
 
-
-zonavida_2.bindPopup(function (error, featureCollection) {
-    if (error || featureCollection.features.length === 0) {
-      console.log(error);
-      console.log(featureCollection);
-      return false;
-    } else {
-      console.log(featureCollection);
-      return 'Risk Level: ' + featureCollection.features[0].properties["Pixel Value"];
-    }
+var cuencas_tdps = L.esri.featureLayer({
+   url: "https://services8.arcgis.com/xyhOybaVXpstyizb/arcgis/rest/services/gpo_cuencas_tdps/FeatureServer/0"
 });
+
+cuencas_tdps.bindPopup(function (layer) {
+    return L.Util.template('<a href="../cuenca/{codigo}/"><strong>{nombre}</strong>.</a>', layer.feature.properties);
+  });
 
 var groupedOverLayers = {
   "Base": {
     "Departamentos": departamentos,
     "Provincias": provincias,
-    "Puno": gpo_puno
+    "Distritos": distritos
   },
   "Data": {
-    "imerg_7day": imerg_7day,
-    "Zona de Vida": zonavida
+    "Temp. Máxima": tdps_tmax,
+    "Temp. Mínima": tdps_tmin,
+    "DEM": tdps_dem,
+    "ETP": tdps_etp,
+    "Precipitación": tdps_pp
+  },
+  "Cuencas": {
+    "Cuencas TDPS": cuencas_tdps
   }
 };
 
@@ -113,11 +130,10 @@ L.control.groupedLayers(null, groupedOverLayers, {
 
 ////////////////////////////////////
 
+//L.control.scale({
+//  imperial: false
+//}).addTo(map);
 
-L.control.scale({
-  imperial: false
-}).addTo(map);
-
-
+////////////////////////////////////
 
 });

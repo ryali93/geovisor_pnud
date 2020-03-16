@@ -1,76 +1,39 @@
 {% extends "app/base_site.html" %}
 
 {% load static %}
+{% load leaflet_tags %}
 
 {% block title %} Dashboard 1 {% endblock title %}
 
 {% block stylesheets %}
     {{ block.super }}
+    <style>
+    .leaflet-container {
+        height: 100%;
+        }
+    #map {
+        width: 100%;
+        height: 580px;
+        box-shadow: 5px 5px 5px #888;
+        display: inline-grid;
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% block content %}
-<div id="map" class="map"></div>
 
-<script type="text/javascript">
-  var vista = new ol.View({
-    center: [-75, -9],
-    zoom: 6,
-    projection: 'EPSG:4326'
-  });
+{% block javascript %}
+{% leaflet_js %}
+<script src="/static/js/mousePosition.js"></script>
+<script src="/static/js/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js"></script>
+<script src="/static/js/L.TileLayer.BetterWMS.js"></script>
+<script src="/static/js/map_container.js"></script>
+<script src="https://unpkg.com/esri-leaflet@2.3.2/dist/esri-leaflet.js" integrity="sha512-6LVib9wGnqVKIClCduEwsCub7iauLXpwrd5njR2J507m3A2a4HXJDLMiSZzjcksag3UluIfuW1KzuWVI5n/cuQ==" crossorigin=""></script>
+{% endblock javascript %}
 
-  var fuenteBase = new ol.source.OSM();
-  var capaBase = new ol.layer.Tile({source:fuenteBase});
-
-  var fuenteWMS = new ol.source.TileWMS({
-    url: "http://servicios.idee.es/wms-inspire/mdt",
-    params: {"LAYERS": "Pendientes"}
-  });
-
-  var capaWMS = new ol.layer.Tile({
-    opacity: 0.5,
-    source:fuenteWMS
-  });
-
-  var capaEsri = new ol.layer.Image({
-      name: 'cartografia',
-      style: 'cartografia',
-      visible: true,
-      source: new ol.source.ImageWMS({
-          url: 'https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer/0',
-          params: {
-              'LAYERS': '1',
-              'STYLES': 'default'}
-      })
-  });
-
-  var controlNuevo = ol.control.defaults({
-      attributionOptions:  {
-        collapsed: false
-      }
-    }).extend([
-      new ol.control.ScaleLine()
-    ]);
-
-  var map = new ol.Map({
-    target: 'map',
-    layers: [ capaBase, capaWMS ],
-    view: vista,
-    controls: controlNuevo
-  });
-
-  var grupo = new ol.layer.Group({
-      title: 'Overlays',
-      layers: [ capaBase ]
-  });
-
-  var layerSwitcher = new ol.control.LayerSwitcher({
-      tipLabel: 'Leyenda'
-    });
-
-  map.addControl(layerSwitcher);
-
-  layerSwitcher.showPanel();
-
-</script>
-
+<div style="display:flex; width: 100%; height:800px;">
+    <div id="map" class="map" style="display:grid;">
+        {% leaflet_map "main" %}
+    </div>
+</div>
 {% endblock content %}

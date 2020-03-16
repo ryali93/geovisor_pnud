@@ -153,6 +153,25 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'geovisor/static')
 ]
 
+stamenurl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png'
+mbUrl = 'https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png'
+osmurl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+esriMap = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+
+LEAFLET_CONFIG = {
+    'DEFAULT_ZOOM': 6,
+    'MIN_ZOOM': 2,
+    'MAX_ZOOM': 22,
+    'TILES': [
+        ("Esri Map",esriMap,{'maxZoom': 20}),
+        ("Map Surfer",mbUrl,{'maxZoom': 20}),
+        ("OSM",osmurl,{'maxZoom': 20}),
+        ("STAMEN",stamenurl,{'maxZoom': 20})
+    ],
+    'RESET_VIEW': False,
+}
+
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # import os

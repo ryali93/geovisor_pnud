@@ -31,6 +31,22 @@ class gpo_cuencas_tdps(models.Model):
         managed = False
         db_table = 'gpo_cuencas_tdps'
 
+class gpo_subcuencas_tdps(models.Model):
+    id = models.BigIntegerField(blank=False, null=False, primary_key=True)
+    codigo = models.TextField(db_column='codigo', blank=True, null=True)
+    nombre = models.TextField(db_column='nombre', blank=True, null=True)
+    area = models.FloatField(db_column='area_km2', blank=True, null=True)
+    cod_parent = models.TextField(db_column='cod_parent', blank=True, null=True)
+    nom_parent = models.TextField(db_column='nom_parent', blank=True, null=True)
+    geom = models.TextField(db_column='geom_json', blank=True, null=True)
+
+    def __str__(self):
+        return self.codigo
+
+    class Meta:
+        managed = False
+        db_table = 'gpo_subcuencas_tdps'
+
 
 class data_bh_month(models.Model):
     id = models.BigIntegerField(blank=False, null=False, primary_key=True)

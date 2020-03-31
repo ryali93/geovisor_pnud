@@ -2,15 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import Http404
 
 # from .models import tb_stations_pp
-from .models import gpo_cuencas_tdps, data_bh_month, data_bh_historic, data_hydrogram_month, data_hydrogram_year
-
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-
-from django.views.defaults import page_not_found
+from .models import gpo_cuencas_tdps, gpo_subcuencas_tdps, data_bh_month, data_bh_historic, data_hydrogram_month, data_hydrogram_year
 
 
 def view_404(request, exception):
@@ -45,6 +37,27 @@ def listar_cuencas(request):
         'cuencas_list': list_cuenca
     }
     return render(request, 'app/list_cuencas.html', context)
+
+
+def listar_subcuencas(request):
+    list_subcuenca = []
+    a = 0
+    for cuenca in gpo_subcuencas_tdps.objects.all():
+        a += 1
+        list_subcuenca.append({
+            'orden': a,
+            'codigo': cuenca.codigo,
+            'nombre': cuenca.nombre,
+            'cod_parent': cuenca.cod_parent,
+            'nom_parent': cuenca.nom_parent,
+            'area': round(cuenca.area, 2),
+            'geom': cuenca.geom
+        })
+    context = {
+        'subcuencas_list': list_subcuenca
+    }
+    return render(request, 'app/list_subcuencas.html', context)
+
 
 # def listar_estaciones(request):
 #     cod_est = []
@@ -111,19 +124,35 @@ def cuenca(request, codigo):
     }
     return render(request, "app/cuenca.html", context)
 
+def subcuenca(request, codigo):
+    # Datos del balance hidrico
+    geo_json, geo_parent_json = extract_geom_subcuenca(codigo)
+    bh_monthly = extract_data_bh_monthly(codigo)
+    bh_historico = extract_data_bh_historic(codigo)
+    tb_monthly = {}
+    tb_historico = {}
+    hydrograph_month = extract_hydrograph_month(codigo)
+    hydrograph_year = extract_hydrograph_year(codigo)
+
+    context = {
+        'geometria': geo_json,
+        'geometria_parent': geo_parent_json,
+        'bh_monthly': bh_monthly,
+        'bh_historico': bh_historico,
+        'tb_monthly': tb_monthly,
+        'tb_historico': tb_historico,
+        'hydrograph_month': hydrograph_month,
+        'hydrograph_year': hydrograph_year
+    }
+    return render(request, "app/cuenca.html", context)
+
 def extract_geom_cuenca(codigo):
-    # geometria = serialize('geojson', gpo_cuencas_tdps.objects.filter(codigo=codigo),
-    #                       geometry_field='geom',
-    #                       fields=('codigo', 'nombre'))
-    geometria = gpo_cuencas_tdps.objects.filter(codigo=codigo)
     import json
-    geom_json = json.loads(geometria[0].geom)
-    # coords = []
-    # for g in geom_json['features'][0]["geometry"]["coordinates"][0][0]:
-    #     y = g[0]
-    #     x = g[1]
-    #     coords.append([x, y])
-    # geom_json['features'][0]["geometry"]["coordinates"][0][0] = coords
+    try:
+        geometria = gpo_cuencas_tdps.objects.filter(codigo=codigo)
+        geom_json = json.loads(geometria[0].geom)
+    except:
+        geom_json = []
     geo_json = {
         "type": "Feature",
         "name": "nombre",
@@ -132,31 +161,68 @@ def extract_geom_cuenca(codigo):
     }
     return geo_json
 
-def extract_data_bh_monthly(codigo):
-    datos = data_bh_month.objects.filter(cod_cuenca=codigo)
-    data = {
-        'pp': [d.pp for d in datos],
-        'etr': [d.etr for d in datos],
-        'runoff': [d.escurr for d in datos]
+def extract_geom_subcuenca(codigo):
+    import json
+    try:
+        geometria = gpo_subcuencas_tdps.objects.filter(codigo=codigo)
+        cod_parent = geometria[0].cod_parent
+        geometria_parent = gpo_cuencas_tdps.objects.filter(codigo=cod_parent)
+        geom_json = json.loads(geometria[0].geom)
+        geom_parent_json = json.loads(geometria_parent[0].geom)
+    except:
+        geom_json = []
+        geom_parent_json = []
+    geo_json = {
+        "type": "Feature",
+        "name": "nombre",
+        "properties": {},
+        "geometry": geom_json
     }
+    geo_parent_json = {
+        "type": "Feature",
+        "name": "nombre",
+        "properties": {},
+        "geometry": geom_parent_json
+    }
+    return geo_json, geo_parent_json
+
+
+def extract_data_bh_monthly(codigo):
+    try:
+        datos = data_bh_month.objects.filter(cod_cuenca=codigo)
+        data = {
+            'pp': [d.pp for d in datos],
+            'etr': [d.etr for d in datos],
+            'runoff': [d.escurr for d in datos]
+        }
+    except:
+        data = {'pp':[], 'etr':[],'runoff':[]}
     return data
 
 def extract_data_bh_historic(codigo):
-    datos = data_bh_historic.objects.filter(cod_cuenca=codigo)
-    data = {
-        'pp': [d.pp for d in datos],
-        'etr': [d.etr for d in datos],
-        'runoff': [d.escurr for d in datos]
-    }
+    try:
+        datos = data_bh_historic.objects.filter(cod_cuenca=codigo)
+        data = {
+            'pp': [d.pp for d in datos],
+            'etr': [d.etr for d in datos],
+            'runoff': [d.escurr for d in datos]
+        }
+    except:
+        data = {'pp':[], 'etr':[],'runoff':[]}
     return data
 
 def extract_hydrograph_month(codigo):
-    datos = data_hydrogram_month.objects.filter(cod_cuenca=codigo)
-    data = [d.caudal for d in datos]
+    try:
+        datos = data_hydrogram_month.objects.filter(cod_cuenca=codigo)
+        data = [d.caudal for d in datos]
+    except:
+        data = []
     return data
 
 def extract_hydrograph_year(codigo):
-    import datetime, time
-    datos = data_hydrogram_year.objects.filter(cod_cuenca=codigo)
-    data = [[int(round(d.mes.timestamp() * 1000)), d.caudal] for d in datos]
+    try:
+        datos = data_hydrogram_year.objects.filter(cod_cuenca=codigo)
+        data = [[int(round(d.mes.timestamp() * 1000)), d.caudal] for d in datos]
+    except:
+        data = []
     return data

@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import Http404
+from django.conf import settings
 
 # from .models import tb_stations_pp
 from .models import gpo_cuencas_tdps, gpo_subcuencas_tdps, data_bh_month, data_bh_historic, data_hydrogram_month, data_hydrogram_year
 
-
-def view_404(request, exception):
-    return render(request, 'app/404.html')
+def error_404_view(request, exception):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request,'app/404.html', data)
 
 def base(request):
     context = {}
     return render(request, 'app/index.html', context)
+
+def contact(request):
+    return render(request, 'app/contact.html', {})
 
 def listar_database(request):
     context = {}
@@ -19,6 +23,14 @@ def listar_database(request):
 def listar_mapas(request):
     context = {}
     return render(request, 'app/list_mapas.html', context)
+
+def mapas_cuencas(request, codigo):
+    context = {'codigo': codigo}
+    return render(request, 'app/mapas_cuencas.html', context)
+
+def mapas_subcuencas(request, codigo):
+    context = {'codigo': codigo}
+    return render(request, 'app/mapas_subcuencas.html', context)
 
 def listar_cuencas(request):
     list_cuenca = []
@@ -42,7 +54,7 @@ def listar_cuencas(request):
 def listar_subcuencas(request):
     list_subcuenca = []
     a = 0
-    for cuenca in gpo_subcuencas_tdps.objects.all():
+    for cuenca in gpo_subcuencas_tdps.objects.all().order_by('nom_parent'):
         a += 1
         list_subcuenca.append({
             'orden': a,
@@ -58,46 +70,9 @@ def listar_subcuencas(request):
     }
     return render(request, 'app/list_subcuencas.html', context)
 
-
-# def listar_estaciones(request):
-#     cod_est = []
-#     nom_est = []
-#     for dato in tb_stations_pp.objects.all():
-#         cod_est.append(dato.cod_est)
-#         nom_est.append(dato.cod_est)
-#     cod_est = list(set(cod_est))
-#     context = {
-#         'estaciones_list': cod_est
-#     }
-#     return render(request, 'app/list_station.html', context)
-
 def mapa(request):
     context = {}
     return render(request, 'app/mapa.html', context)
-
-# class EstacionPISCO_Details(APIView):
-#     def get_object(self, pk):
-#         try:
-#             data_total = tb_stations_pp.objects.all()
-#             data_estacion = dict()
-#             data_pisco = dict()
-#             for station in data_total:
-#                 if station.cod_est == pk:
-#                     data_pisco[station.mes] = station.pisco
-#                     data_estacion[station.mes] = station.data
-#             data_pisco = dict(data_pisco)
-#             data = {
-#                 "pisco_labels": data_pisco.keys(),
-#                 "pisco_data": data_pisco.values(),
-#                 "estacion_data": data_estacion.values()
-#             }
-#             return data
-#         except tb_stations_pp.DoesNotExist:
-#             raise Http404
-#     def get(self, request, pk, format=None):
-#         data = self.get_object(pk)
-#         return Response(data)
-
 
 def grafico(request, codigo):
     context = {'codigo': codigo}
@@ -144,7 +119,7 @@ def subcuenca(request, codigo):
         'hydrograph_month': hydrograph_month,
         'hydrograph_year': hydrograph_year
     }
-    return render(request, "app/cuenca.html", context)
+    return render(request, "app/subcuenca.html", context)
 
 def extract_geom_cuenca(codigo):
     import json
@@ -226,3 +201,5 @@ def extract_hydrograph_year(codigo):
     except:
         data = []
     return data
+
+

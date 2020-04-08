@@ -1,5 +1,5 @@
 {% extends "app/base_site.html" %}
-
+{% load static %}
 {% block content %}
 <div class="col-md-12">
     <div class="card">
@@ -15,7 +15,8 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Área (Km <sup>2</sup>)</th>
-                        <th class="td-actions text-right">Detalles</th>
+                        <th>Mapas</th>
+                        <th>Detalles</th>
                     </tr>
                 </thead>
 
@@ -26,7 +27,11 @@
                         <td style="text-align:center;">{{ cuenca.codigo }}</td>
                         <td style="text-align:center;">{{ cuenca.nombre }}</td>
                         <td style="text-align:center;">{{ cuenca.area }} Km<sup>2</sup></td>
-                        <td class="td-actions text-right"><a href="../cuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
+                        <td style="text-align:center;">
+                            <a href="../cuenca/{{ cuenca.codigo }}/mapas" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapas</i>
+                            </a>
+                        </td>
+                        <td style="text-align:center;"><a href="../cuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

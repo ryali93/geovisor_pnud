@@ -18,7 +18,7 @@ urlpatterns = [
     path('list_cuencas/', listar_cuencas, name='listar_cuencas'),
     path('list_subcuencas/', listar_subcuencas, name='listar_subcuencas'),
     path('mapa/', mapa, name='mapa'),
-    path('cuenca/<str:codigo>mapas/', mapas_cuencas, name='mapas_cuencas'),
+    path('cuenca/<str:codigo>/mapas/', mapas_cuencas, name='mapas_cuencas'),
     path('subcuenca/<str:codigo>/mapas', mapas_subcuencas, name='mapas_subcuencas'),
     path('contact/', contact, name='contact'),
 ]

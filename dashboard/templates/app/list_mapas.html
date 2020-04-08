@@ -1,4 +1,5 @@
 {% extends "app/base_site.html" %}
+{% load static %}
 
 {% block content %}
 <div class="col-md-12">
@@ -13,45 +14,55 @@
                     <tr>
                         <th>#</th>
                         <th>Nombre del mapa</th>
-                        <th class="td-actions text-right">Opción</th>
+                        <th style="text-align:center;">Opción</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>01</td>
-                        <td>M_01_ubicacionpolitica</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=1840V0oHQp9zjV4dxNddTLGKRasAx1OlH" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">01</td>
+                        <td style="text-align:center;">M_01_ubicacionpolitica</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_01_ubicacionpolitica.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>02</td>
-                        <td>M_02_delimitacionsubcuencas</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=14EhsOctywpIxGbVu9NVZkvb0PAg-t4lS" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">02</td>
+                        <td style="text-align:center;">M_02_delimitacionsubcuencas</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_02_delimitacionsubcuencas.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>03</td>
-                        <td>M_03_hidrografia</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=16b0it9jS16UQ1WZ2o3TYR7ddJ4gVzfzq" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">03</td>
+                        <td style="text-align:center;">M_03_hidrografia</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_03_hidrografia.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>04</td>
-                        <td>M_04_topografia</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=10tKmmO2jsLCjHehq2dl5ObyoviQ7_HfP" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">04</td>
+                        <td style="text-align:center;">M_04_topografia</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_04_topografia.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>05</td>
-                        <td>M_05_ubicacionestaciones</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=1lzmNfW6lySdpiQJuNmMXPVh1AegvKHYG" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">05</td>
+                        <td style="text-align:center;">M_05_ubicacionestaciones</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_05_ubicacionestaciones.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>06</td>
-                        <td>M_06_temperaturamax</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=1K9vGae8452ZIxmkHiLzVHkiNSMitqU0w" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">06</td>
+                        <td style="text-align:center;">M_06_precipitation</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_06_precipitation.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                     <tr>
-                        <td>07</td>
-                        <td>M_07_temperaturamin</td>
-                        <td class="td-actions text-right"><a href="https://drive.google.com/open?id=1fvcTZcaO33GoB3rOqMHClpBkTJBx5UMC" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Mapa</i></a></td>
+                        <td style="text-align:center;">07</td>
+                        <td style="text-align:center;">M_07_temperaturamax</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_07_temperaturamax.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">08</td>
+                        <td style="text-align:center;">M_08_temperaturamin</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_08_temperaturamin.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">09</td>
+                        <td style="text-align:center;">M_09_etp</td>
+                        <td style="text-align:center;"><a href="{% static 'pdf/M_09_etp.pdf' %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver mapa</i></a></td>
                     </tr>
                 </tbody>
 

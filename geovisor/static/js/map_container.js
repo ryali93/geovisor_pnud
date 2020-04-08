@@ -87,12 +87,25 @@ var tdps_pp = L.esri.tiledMapLayer({
 });
 
 var cuencas_tdps = L.esri.featureLayer({
-   url: "https://services8.arcgis.com/xyhOybaVXpstyizb/arcgis/rest/services/gpo_cuencas_tdps/FeatureServer/0"
+   url: "https://services8.arcgis.com/xyhOybaVXpstyizb/ArcGIS/rest/services/gpo_cuencas_tdps/FeatureServer/0",
+   style: { color: 'red', weight: 3 }
 });
+
+var subcuencas_tdps = L.esri.featureLayer({
+   url: "https://services8.arcgis.com/xyhOybaVXpstyizb/ArcGIS/rest/services/gpo_subcuencas_tdps/FeatureServer/0",
+   simplifyFactor: 0.5,
+   style: { color: 'blue', weight: 1 }
+});
+
 
 cuencas_tdps.bindPopup(function (layer) {
     return L.Util.template('<a href="../cuenca/{codigo}/"><strong>{nombre}</strong>.</a>', layer.feature.properties);
   });
+
+subcuencas_tdps.bindPopup(function (layer) {
+    return L.Util.template('<a href="../subcuenca/{codigo}/"><strong>{codigo}</strong>.</a>', layer.feature.properties);
+  });
+
 
 var groupedOverLayers = {
   "Base": {
@@ -108,7 +121,8 @@ var groupedOverLayers = {
     "Precipitación": tdps_pp
   },
   "Cuencas": {
-    "Cuencas TDPS": cuencas_tdps
+    "Cuencas TDPS": cuencas_tdps,
+    "Subcuencas TDPS": subcuencas_tdps
   }
 };
 

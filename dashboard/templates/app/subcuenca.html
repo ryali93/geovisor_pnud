@@ -40,7 +40,7 @@
     <h4 class="title">Tabla Mensual</h4>
     <div class="table-fluid">
         <div class="table-scrollable">
-            <table class="table dataTable no-footer" id="table_monthly" role="grid" style="width: 1480px;">
+            <table class="table dataTable no-footer" id="table_year" role="grid" style="width: 1480px;">
                 <thead>
                     <tr role="row">
                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
@@ -80,43 +80,50 @@
     </div>
 </div>
 
+
 <div>
     <h4 class="title">Tabla Histórico</h4>
     <div class="table-fluid">
         <div class="table-scrollable">
-            <table class="table dataTable no-footer" id="table_year" role="grid" style="width: 1480px;">
+            <table class="table dataTable no-footer" id="table_monthly" role="grid" style="width: 1480px;">
                 <thead>
                     <tr role="row">
                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">sep</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">oct</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">nov</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">dic</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">ene</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">feb</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">mar</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">abr</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">may</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 88px;">jun</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 72px;">jul</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 89px;">ago</th>
+                        {% for anno in annos %}
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">{{ anno }}</th>
+                        {% endfor %}
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr role="row" class="odd">
-                        <td>Precipitación (mm)</td><td>27.1</td><td>38.7</td><td>55.1</td><td>102.1</td><td>162.5</td><td>131.8</td><td>107.1</td><td>43.5</td><td>11.4</td><td>6.7</td><td>6.1</td><td>12.9</td>
+                        <td>Precipitación (mm)</td>
+                        {% for pp in pp_anual %}
+                            <td>{{ pp }}</td>
+                        {% endfor %}
                     </tr>
                     <tr role="row" class="even">
-                        <td>ETR (mm)</td><td>18.6</td><td>31</td><td>41.6</td><td>63.5</td><td>89.2</td><td>88.2</td><td>88.9</td><td>66.2</td><td>42.8</td><td>19.5</td><td>11.3</td><td>10.9</td></tr>
+                        <td>ETR (mm)</td>
+                        {% for etr in etr_anual %}
+                            <td>{{ etr }}</td>
+                        {% endfor %}
+                    </tr>
                     <tr role="row" class="odd">
-                        <td>ETP (mm)</td><td>135.5</td><td>147.3</td><td>139.9</td><td>130.1</td><td>121.5</td><td>108.9</td><td>115.2</td><td>106.4</td><td>115.8</td><td>110.3</td><td>123</td><td>134.2</td>
+                        <td>ETP (mm)</td>
+                        {% for etp in etp_anual %}
+                            <td>{{ etp }}</td>
+                        {% endfor %}
                     </tr>
                     <tr role="row" class="even">
-                        <td>Escurrimiento (mm)</td><td>2.4</td><td>2.6</td><td>3.3</td><td>7.3</td><td>33.2</td><td>39.5</td><td>26.7</td><td>9.9</td><td>3.9</td><td>2.6</td><td>2.3</td><td>2.3</td>
+                        <td>Escurrimiento (mm)</td>
+                        {% for fout in flow_out_anual %}
+                            <td>{{ fout }}</td>
+                        {% endfor %}
                     </tr>
                     <tr role="row" class="odd">
-                        <td>Caudal (m3/s)</td><td>58.2</td><td>63.5</td><td>90.3</td><td>200.1</td><td>640.8</td><td>776.6</td><td>523.3</td><td>218.5</td><td>89.3</td><td>64.8</td><td>56.4</td><td>54.8</td>
+                        <td>Caudal (m3/s)</td>
+                        {% for q in q_anual %}
+                            <td>{{ q }}</td>
+                        {% endfor %}
                     </tr>
                 </tbody>
             </table>
@@ -176,7 +183,7 @@
             categories: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         },
         yAxis: {
-            min: -15,
+            min: -150,
             title: {
                 text: 'Balance en cuenca'
             },
@@ -191,6 +198,7 @@
                 }
             }
         },
+        colors: ['Blue', 'Green', 'Red'],
         legend: {
             align: 'center',
             verticalAlign: 'bottom',
@@ -211,13 +219,13 @@
         },
         series: [{
             name: 'Precipitación (mm)',
-            data: {{ bh_monthly.pp }}
-        }, {
-            name: 'ETR (mm)',
-            data: {{ bh_monthly.etr }}
+            data: {{ pp_clima }}
         }, {
             name: 'Escurrimiento (mm)',
-            data: {{ bh_monthly.runoff }}
+            data: {{ flow_out_clima }}
+        }, {
+            name: 'ETR (mm)',
+            data: {{ etr_clima }}
         }]
     });
 </script>
@@ -231,10 +239,10 @@
             text: 'Balance histórico'
         },
         xAxis: {
-            categories: [1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017]
+            categories: [1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016]
         },
         yAxis: {
-            min: -15,
+            min: -1000,
             title: {
                 text: 'Balance en cuenca'
             },
@@ -245,10 +253,11 @@
                     color: ( // theme
                         Highcharts.defaultOptions.title.style &&
                         Highcharts.defaultOptions.title.style.color
-                    ) || 'gray'
+                    ) || '#FFFFFF'
                 }
             }
         },
+        colors: ['Blue', 'Green', 'Red'],
         legend: {
             align: 'center',
             verticalAlign: 'bottom',
@@ -269,13 +278,13 @@
         },
         series: [{
             name: 'Precipitación (mm)',
-            data: {{ bh_historico.pp }}
+            data: {{ pp_anual }}
+        },{
+            name: 'Escurrimiento (mm)',
+            data: {{ flow_out_anual }}
         }, {
             name: 'ETR (mm)',
-            data: {{ bh_historico.etr }}
-        }, {
-            name: 'Escurrimiento (mm)',
-            data: {{ bh_historico.runoff }}
+            data: {{ etr_anual }}
         }]
     });
 </script>
@@ -324,7 +333,7 @@
             marker: {
                 symbol: 'diamond'
             },
-            data: {{ hydrograph_month }}
+            data: {{ q_clima }}
         }]
     });
 </script>
@@ -385,7 +394,7 @@
         series: [{
             type: 'area',
             name: 'Caudal (mm3/s)',
-            data: {{ hydrograph_year }}
+            data: {{ q_hydrogram }}
         }]
     });
 

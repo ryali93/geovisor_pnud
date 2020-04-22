@@ -1,38 +1,75 @@
 {% extends "app/base_site.html" %}
 
 {% block content %}
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header" data-background-color="blue">
-            <h4 class="title">Bases de Datos</h4>
-            <p class="category">Datos de las subcuencas del sistema TDPS</p>
-        </div>
-        <div class="card-content table-responsive">
-            <table class="table table-hover">
-                <thead class="text-info text-center">
-                    <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Nombre de la cuenca</th>
-                        <th>Área (Km <sup>2</sup>)</th>
-                        <th>Detalles</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    {% for cuenca in subcuencas_list %}
-                    <tr>
-                        <td style="text-align:center;">{{ cuenca.orden }}</td>
-                        <td style="text-align:center;">{{ cuenca.codigo }}</td>
-                        <td style="text-align:center;">{{ cuenca.nom_parent }}</td>
-                        <td style="text-align:center;">{{ cuenca.area }} Km<sup>2</sup></td>
-                        <td style="text-align:center;"><a href="../subcuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" data-background-color="blue">
+                <h4 class="title">Reporte: <strong>215 cuencas</strong> </h4>
+                <p class="category">Subcuencas con datos de reporte</p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-info text-center">
+                        <tr>
+                            <th>#</th>
+                            <th>Código</th>
+                            <th>Nombre de la cuenca</th>
+                            <th>Área (Km <sup>2</sup>)</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
 
-            </table>
+                    <tbody>
+                        {% for cuenca in subcuencas_list %}
+                        <tr>
+                            <td style="text-align:center;">{{ cuenca.orden }}</td>
+                            <td style="text-align:center;">{{ cuenca.codigo }}</td>
+                            <td style="text-align:center;">{{ cuenca.nom_parent }}</td>
+                            <td style="text-align:center;">{{ cuenca.area }} Km<sup>2</sup></td>
+                            <td style="text-align:center;"><a href="../subcuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" data-background-color="blue">
+                <h4 class="title">Calibración: <strong>4 cuencas</strong> </h4>
+                <p class="category">Subcuencas con datos de calibración</p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-info text-center">
+                        <tr>
+                            <th>#</th>
+                            <th>Código</th>
+                            <th>Nombre de la cuenca</th>
+                            <th>Área (Km <sup>2</sup>)</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for cuenca in subcuencas_list_calibracion %}
+                        <tr>
+                            <td style="text-align:center;">{{ cuenca.orden }}</td>
+                            <td style="text-align:center;">{{ cuenca.codigo }}</td>
+                            <td style="text-align:center;">{{ cuenca.nom_parent }}</td>
+                            <td style="text-align:center;">{{ cuenca.area }} Km<sup>2</sup></td>
+                            <td style="text-align:center;"><a href="../subcuenca/{{ cuenca.codigo }}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs" data-original-title="Ver detalles"><i class="material-icons">Ver Detalle</i></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

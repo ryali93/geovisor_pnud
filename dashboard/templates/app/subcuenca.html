@@ -15,137 +15,194 @@
 
 {% block content %}
 
-<div style="display:flex; width: 100%; padding-bottom: 20px;">
-    <div id="map" class="mapa_cuenca" style="width: 45%;height: 400px;"></div>
-    <div style="width: 5%;"></div>
-    <div style="width: 45%;height: 400px;">
-        <figure class="highcharts-figure">
-            <div id="bh_monthly"></div>
-        </figure>
+
+<div style="display:flex; width: 100%; padding-bottom:40px;">
+    <div class="card" style="width:48%;">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title" style="color:white;">Cuenca {{ codigo }}</h4>
+        </div>
+        <div class="card-content">
+            <div id="map" class="mapa_cuenca" style="margin:15px;height:400px;"></div>
+        </div>
     </div>
-    <div style="width: 5%;"></div>
+    <div style="width: 2%;"></div>
+
+    <div class="card" style="width:48%;">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title" style="color:white;">Balance hídrico</h4>
+        </div>
+        <div style="height: 400px;">
+            <figure class="highcharts-figure">
+                <div id="bh_monthly"></div>
+            </figure>
+        </div>
+    </div>
+    <div style="width: 2%;"></div>
 </div>
 
-<div style="display:flex; width: 100%; padding-bottom: 20px;">
-    <div style="width: 95%;height: 400px;">
-        <figure class="highcharts-figure">
-            <div id="bh_historico"></div>
-        </figure>
+<div class="card" style="width:100%;padding-bottom:40px;">
+    <div class="card-header" data-background-color="blue">
+        <h4 class="title" style="color:white;">Balance Histórico</h4>
     </div>
-    <div style="width: 5%;"></div>
-</div>
-
-
-<div>
-    <h4 class="title">Tabla Mensual</h4>
-    <div class="table-fluid">
-        <div class="table-scrollable">
-            <table class="table dataTable no-footer" id="table_year" role="grid" style="width: 1480px;">
-                <thead>
-                    <tr role="row">
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">sep</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">oct</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">nov</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">dic</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">ene</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">feb</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">mar</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">abr</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">may</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 88px;">jun</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 72px;">jul</th>
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 89px;">ago</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr role="row" class="odd">
-                        <td>Precipitación (mm)</td><td>27.1</td><td>38.7</td><td>55.1</td><td>102.1</td><td>162.5</td><td>131.8</td><td>107.1</td><td>43.5</td><td>11.4</td><td>6.7</td><td>6.1</td><td>12.9</td>
-                    </tr>
-                    <tr role="row" class="even">
-                        <td>ETR (mm)</td><td>18.6</td><td>31</td><td>41.6</td><td>63.5</td><td>89.2</td><td>88.2</td><td>88.9</td><td>66.2</td><td>42.8</td><td>19.5</td><td>11.3</td><td>10.9</td></tr>
-                    <tr role="row" class="odd">
-                        <td>ETP (mm)</td><td>135.5</td><td>147.3</td><td>139.9</td><td>130.1</td><td>121.5</td><td>108.9</td><td>115.2</td><td>106.4</td><td>115.8</td><td>110.3</td><td>123</td><td>134.2</td>
-                    </tr>
-                    <tr role="row" class="even">
-                        <td>Escurrimiento (mm)</td><td>2.4</td><td>2.6</td><td>3.3</td><td>7.3</td><td>33.2</td><td>39.5</td><td>26.7</td><td>9.9</td><td>3.9</td><td>2.6</td><td>2.3</td><td>2.3</td>
-                    </tr>
-                    <tr role="row" class="odd">
-                        <td>Caudal (m3/s)</td><td>58.2</td><td>63.5</td><td>90.3</td><td>200.1</td><td>640.8</td><td>776.6</td><td>523.3</td><td>218.5</td><td>89.3</td><td>64.8</td><td>56.4</td><td>54.8</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="card-content">
+        <div style="display:flex; width: 100%; padding-bottom: 20px;">
+            <div style="width: 100%;height: 400px;">
+                <figure class="highcharts-figure">
+                    <div id="bh_historico"></div>
+                </figure>
+            </div>
+            <div style="width: 5%;"></div>
         </div>
     </div>
 </div>
 
+<div class="card" style="width:100%;padding-bottom:40px;">
+    <div class="card-header" data-background-color="blue">
+        <h4 class="title" style="color:white;">Tabla Mensual</h4>
+    </div>
 
-<div>
-    <h4 class="title">Tabla Histórico</h4>
-    <div class="table-fluid">
-        <div class="table-scrollable">
-            <table class="table dataTable no-footer" id="table_monthly" role="grid" style="width: 1480px;">
-                <thead>
-                    <tr role="row">
-                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
-                        {% for anno in annos %}
-                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">{{ anno }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr role="row" class="odd">
-                        <td>Precipitación (mm)</td>
-                        {% for pp in pp_anual %}
-                            <td>{{ pp }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr role="row" class="even">
-                        <td>ETR (mm)</td>
-                        {% for etr in etr_anual %}
-                            <td>{{ etr }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr role="row" class="odd">
-                        <td>ETP (mm)</td>
-                        {% for etp in etp_anual %}
-                            <td>{{ etp }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr role="row" class="even">
-                        <td>Escurrimiento (mm)</td>
-                        {% for fout in flow_out_anual %}
-                            <td>{{ fout }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr role="row" class="odd">
-                        <td>Caudal (m3/s)</td>
-                        {% for q in q_anual %}
-                            <td>{{ q }}</td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
+    <div class="card-content">
+        <div class="table-fluid">
+            <div class="table-scrollable">
+                <table class="table dataTable no-footer" id="table_year" role="grid" style="width: 1480px;">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">sep</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">oct</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">nov</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">dic</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">ene</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">feb</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">mar</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">abr</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">may</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 88px;">jun</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 72px;">jul</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 89px;">ago</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr role="row" class="odd">
+                            <td>Precipitación (mm)</td>
+                            {% for pp in pp_clima %}
+                                <td>{{ pp }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="even">
+                            <td>ETR (mm)</td>
+                            {% for etr in etr_clima %}
+                                <td>{{ etr }}</td>
+                            {% endfor %}
+                        <tr role="row" class="odd">
+                            <td>ETP (mm)</td>
+                            {% for etp in etp_clima %}
+                                <td>{{ etp }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="even">
+                            <td>Escurrimiento (mm)</td>
+                            {% for fout in flow_out_clima %}
+                                <td>{{ fout }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td>Caudal (m3/s)</td>
+                            {% for q in q_clima %}
+                                <td>{{ q }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
+<div class="card" style="width:100%;padding-bottom:40px;">
+    <div class="card-header" data-background-color="blue">
+        <h4 class="title" style="color:white;">Tabla Histórico</h4>
+    </div>
 
-<div style="display:flex; width: 100%; padding-bottom: 20px;">
-    <div style="width: 45%;height: 400px;">
-        <figure class="highcharts-figure">
-            <div id="hydrograph_month"></div>
-        </figure>
+    <div class="card-content">
+        <div class="table-fluid">
+            <div class="table-scrollable">
+                <table class="table dataTable table-hover no-footer mb-0" id="table_monthly" role="grid" style="overflow-x:auto;width: 1480px;">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Variable</th>
+                            {% for anno in annos %}
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 87px;">{{ anno }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd">
+                            <td>Precipitación (mm)</td>
+                            {% for pp in pp_anual %}
+                                <td>{{ pp }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="even">
+                            <td>ETR (mm)</td>
+                            {% for etr in etr_anual %}
+                                <td>{{ etr }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td>ETP (mm)</td>
+                            {% for etp in etp_anual %}
+                                <td>{{ etp }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="even">
+                            <td>Escurrimiento (mm)</td>
+                            {% for fout in flow_out_anual %}
+                                <td>{{ fout }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td>Caudal (m3/s)</td>
+                            {% for q in q_anual %}
+                                <td>{{ q }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div style="width: 5%;"></div>
-    <div style="width: 45%;height: 400px;">
-        <figure class="highcharts-figure">
-            <div id="hydrograph_year"></div>
-        </figure>
-    </div>
-    <div style="width: 5%;"></div>
+
 </div>
+
+<div style="display:flex; width: 100%; padding-bottom:40px;">
+    <div class="card" style="width:48%;">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title" style="color:white;">Hidrograma mensual</h4>
+        </div>
+        <div class="card-content">
+            <figure class="highcharts-figure">
+                <div id="hydrograph_month"></div>
+            </figure>
+        </div>
+    </div>
+    <div style="width: 2%;"></div>
+
+    <div class="card" style="width:48%;">
+        <div class="card-header" data-background-color="blue">
+            <h4 class="title" style="color:white;">Hidrograma</h4>
+        </div>
+        <div style="height: 400px;">
+            <figure class="highcharts-figure">
+                <div id="hydrograph_year"></div>
+            </figure>
+        </div>
+    </div>
+    <div style="width: 2%;"></div>
+</div>
+
+
 
 
 <script type="text/javascript">

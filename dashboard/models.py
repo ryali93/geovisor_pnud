@@ -42,21 +42,24 @@ class tb_subcuencas_tdps_resultados(models.Model):
     etr_month = models.TextField(db_column='etr_month', blank=True, null=True)
     q_month = models.TextField(db_column='q_month', blank=True, null=True)
     flow_out_month = models.TextField(db_column='flow_out_month', blank=True, null=True)
-    surq_month = models.TextField(db_column='surq_month', blank=True, null=True)
+    # wyld_month = models.TextField(db_column='wyld_month', blank=True, null=True)
+    # surq_month = models.TextField(db_column='surq_month', blank=True, null=True)
 
     pp_anual = models.TextField(db_column='pp_anual', blank=True, null=True)
     etp_anual = models.TextField(db_column='etp_anual', blank=True, null=True)
     etr_anual = models.TextField(db_column='etr_anual', blank=True, null=True)
     q_anual = models.TextField(db_column='q_anual', blank=True, null=True)
     flow_out_anual = models.TextField(db_column='flow_out_anual', blank=True, null=True)
-    surq_anual = models.TextField(db_column='surq_anual', blank=True, null=True)
+    wyld_anual = models.TextField(db_column='wyld_anual', blank=True, null=True)
+    # surq_anual = models.TextField(db_column='surq_anual', blank=True, null=True)
 
     pp_clima = models.TextField(db_column='pp_clima', blank=True, null=True)
     etp_clima = models.TextField(db_column='etp_clima', blank=True, null=True)
     etr_clima = models.TextField(db_column='etr_clima', blank=True, null=True)
     q_clima = models.TextField(db_column='q_clima', blank=True, null=True)
     flow_out_clima = models.TextField(db_column='flow_out_clima', blank=True, null=True)
-    surq_clima = models.TextField(db_column='surq_clima', blank=True, null=True)
+    wyld_clima = models.TextField(db_column='wyld_clima', blank=True, null=True)
+    # surq_clima = models.TextField(db_column='surq_clima', blank=True, null=True)
 
     def __str__(self):
         return self.codigo

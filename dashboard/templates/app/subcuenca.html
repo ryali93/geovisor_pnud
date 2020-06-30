@@ -51,7 +51,6 @@
                     <div id="bh_historico"></div>
                 </figure>
             </div>
-            <div style="width: 5%;"></div>
         </div>
     </div>
 </div>
@@ -109,7 +108,7 @@
                         </tr>
                         <tr role="row" class="odd">
                             <td>Caudal (m3/s)</td>
-                            {% for q in q_clima %}
+                            {% for q in wyld_clima %}
                                 <td>{{ q }}</td>
                             {% endfor %}
                         </tr>
@@ -122,7 +121,7 @@
 
 <div class="card" style="width:100%;padding-bottom:40px;">
     <div class="card-header" data-background-color="blue">
-        <h4 class="title" style="color:white;">Tabla Histórico</h4>
+        <h4 class="title" style="color:white;">Tabla Histórica</h4>
     </div>
 
     <div class="card-content">
@@ -164,7 +163,7 @@
                         </tr>
                         <tr role="row" class="odd">
                             <td>Caudal (m3/s)</td>
-                            {% for q in q_anual %}
+                            {% for q in wyld_anual %}
                                 <td>{{ q }}</td>
                             {% endfor %}
                         </tr>
@@ -223,6 +222,8 @@
     var geom = L.geoJSON({{ geometria | safe }});
     var geom_padre = L.geoJSON({{ geometria_parent | safe }}, {style: setStyle});
 
+    geom.bindPopup("Subcuenca: {{ codigo }}");
+
     geom_padre.addTo(map);
     geom.addTo(map);
     map.fitBounds(geom.getBounds().pad(2));
@@ -278,11 +279,11 @@
             name: 'Precipitación (mm)',
             data: {{ pp_clima }}
         }, {
-            name: 'Escurrimiento (mm)',
-            data: {{ flow_out_clima }}
-        }, {
             name: 'ETR (mm)',
-            data: {{ etr_clima }}
+            data: {{ etr_clima_bh }}
+        }, {
+            name: 'Escurrimiento (mm)',
+            data: {{ wyld_clima_bh }}
         }]
     });
 </script>
@@ -299,7 +300,7 @@
             categories: [1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016]
         },
         yAxis: {
-            min: -1000,
+            min: -1200,
             title: {
                 text: 'Balance en cuenca'
             },
@@ -336,12 +337,12 @@
         series: [{
             name: 'Precipitación (mm)',
             data: {{ pp_anual }}
-        },{
-            name: 'Escurrimiento (mm)',
-            data: {{ flow_out_anual }}
         }, {
             name: 'ETR (mm)',
-            data: {{ etr_anual }}
+            data: {{ etr_anual_bh }}
+        },{
+            name: 'Escurrimiento (mm)',
+            data: {{ wyld_anual_bh }}
         }]
     });
 </script>
@@ -386,7 +387,7 @@
             }
         },
         series: [{
-            name: 'Caudal (mm3/s)',
+            name: 'Caudal (m3/s)',
             marker: {
                 symbol: 'diamond'
             },
@@ -411,6 +412,7 @@
             type: 'datetime'
         },
         yAxis: {
+            min: 0,
             title: {
                 text: 'Balance en cuenca'
             }
@@ -450,7 +452,7 @@
 
         series: [{
             type: 'area',
-            name: 'Caudal (mm3/s)',
+            name: 'Caudal (m3/s)',
             data: {{ q_hydrogram }}
         }]
     });

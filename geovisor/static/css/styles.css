@@ -61,6 +61,12 @@
     display: inline-block;
 }
 
+.table.dataTable {
+    clear: both;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+}
 
 
 .card [data-background-color="blue"] {

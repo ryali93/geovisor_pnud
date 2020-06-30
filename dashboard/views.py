@@ -129,33 +129,38 @@ def subcuenca(request, codigo):
     for x in range(len(caudales)):
         q_hydrogram.append([dates[x], round(float(caudales[x]), 2)])
 
-    print(q_hydrogram)
-
     context = {
         'codigo': subcuenca[0].codigo,
         'geometria': geo_json,
         'geometria_parent': geo_parent_json,
 
-        'pp_month': [round(float(x),2) for x in subcuenca[0].pp_month.split(',')[:-1]],
-        'etp_month': [round(float(x),2) for x in subcuenca[0].etp_month.split(',')[:-1]],
-        'etr_month': [round(float(x),2) for x in subcuenca[0].etr_month.split(',')[:-1]],
-        'q_month': [round(float(x),2) for x in subcuenca[0].q_month.split(',')[:-1]],
-        'flow_out_month': [round(float(x),2) for x in subcuenca[0].flow_out_month.split(',')[:-1]],
-        'surq_month': [round(float(x),2) for x in subcuenca[0].surq_month.split(',')[:-1]],
+        # 'pp_month': [round(float(x),2) for x in subcuenca[0].pp_month.split(',')[:-1]],
+        # 'etp_month': [round(float(x),2) for x in subcuenca[0].etp_month.split(',')[:-1]],
+        # 'etr_month': [round(float(x),2) for x in subcuenca[0].etr_month.split(',')[:-1]],
+        # 'q_month': [round(float(x),2) for x in subcuenca[0].q_month.split(',')[:-1]],
+        # 'flow_out_month': [round(float(x),2) for x in subcuenca[0].flow_out_month.split(',')[:-1]],
+        # 'wyld_month': [round(float(x), 2) for x in subcuenca[0].wyld_month.split(',')[:-1]],
+        # 'surq_month': [round(float(x),2) for x in subcuenca[0].surq_month.split(',')[:-1]],
 
-        'pp_anual': [round(float(x),2) for x in subcuenca[0].pp_anual.split(',')[:-1]],
-        'etp_anual': [round(float(x),2) for x in subcuenca[0].etp_anual.split(',')[:-1]],
-        'etr_anual': [round(-float(x),2) for x in subcuenca[0].etr_anual.split(',')[:-1]],
-        'q_anual': [round(-float(x),2) for x in subcuenca[0].q_anual.split(',')[:-1]],
-        'flow_out_anual': [round(-float(x),2) for x in subcuenca[0].flow_out_anual.split(',')[:-1]],
-        'surq_anual': [round(-float(x),2) for x in subcuenca[0].surq_anual.split(',')[:-1]],
+        'pp_anual': [round(float(x),2) for x in subcuenca[0].pp_anual.split(',')],
+        'etp_anual': [round(float(x),2) for x in subcuenca[0].etp_anual.split(',')],
+        'etr_anual': [round(float(x),2) for x in subcuenca[0].etr_anual.split(',')],
+        'etr_anual_bh': [round(-float(x), 2) for x in subcuenca[0].etr_anual.split(',')],
+        'q_anual': [round(-float(x),2) for x in subcuenca[0].q_anual.split(',')],
+        'flow_out_anual': [round(float(x),2) for x in subcuenca[0].flow_out_anual.split(',')[:-1]],
+        'wyld_anual': [round(float(x), 2) for x in subcuenca[0].wyld_anual.split(',')],
+        'wyld_anual_bh': [round(-float(x), 2) for x in subcuenca[0].wyld_anual.split(',')],
+        # 'surq_anual': [round(-float(x),2) for x in subcuenca[0].surq_anual.split(',')[:-1]],
 
-        'pp_clima': [round(float(x),2) for x in subcuenca[0].pp_clima.split(',')[:-1]],
-        'etp_clima': [round(float(x),2) for x in subcuenca[0].etp_clima.split(',')[:-1]],
-        'etr_clima': [round(-float(x),2) for x in subcuenca[0].etr_clima.split(',')[:-1]],
+        'pp_clima': [round(float(x),2) for x in subcuenca[0].pp_clima.split(',')],
+        'etp_clima': [round(float(x),2) for x in subcuenca[0].etp_clima.split(',')],
+        'etr_clima': [round(float(x),2) for x in subcuenca[0].etr_clima.split(',')],
+        'etr_clima_bh': [round(-float(x), 2) for x in subcuenca[0].etr_clima.split(',')],
         'q_clima': [round(float(x),2) for x in subcuenca[0].q_clima.split(',')[:-1]],
-        'flow_out_clima': [round(-float(x),2) for x in subcuenca[0].flow_out_clima.split(',')[:-1]],
-        'surq_clima': [round(float(x),2) for x in subcuenca[0].surq_clima.split(',')[:-1]],
+        'flow_out_clima': [round(float(x),2) for x in subcuenca[0].flow_out_clima.split(',')[:-1]],
+        'wyld_clima': [round(float(x), 2) for x in subcuenca[0].wyld_clima.split(',')],
+        'wyld_clima_bh': [round(-float(x), 2) for x in subcuenca[0].wyld_clima.split(',')],
+        # 'surq_clima': [round(float(x),2) for x in subcuenca[0].surq_clima.split(',')[:-1]],
 
         'annos': range(1981, 2017),
         'q_hydrogram': q_hydrogram,
@@ -264,5 +269,4 @@ def extract_hydrograph_year(codigo):
     except:
         data = []
     return data
-
 
